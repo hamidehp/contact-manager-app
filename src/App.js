@@ -1,10 +1,13 @@
 
 import './App.css';
-
+import Navbar from './components/Navbar'
 const App=()=> {
   return (
     <div className="App">
-  <h3> اپلیکیشن مدیریت مخاطبان</h3>
+  <Navbar />
+  <span className="fa fa-user"></span>
+  <button className="btn btn-primary"> نمایش</button>
+  
     </div>
   );
 }
