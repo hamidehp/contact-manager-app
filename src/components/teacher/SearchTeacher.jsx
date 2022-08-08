@@ -1,5 +1,5 @@
 import {PURPLE,COMMENT} from '../../helpers/color';
-const SearchContact = () => {
+const SearchTeacher = () => {
   return (
     <div className='input-group mx-2 w=75 ' dir='rtl'>
       <span
@@ -20,4 +20,4 @@ const SearchContact = () => {
     </div>
   )
 }
-export default SearchContact
+export default SearchTeacher

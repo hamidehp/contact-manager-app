@@ -1,4 +1,4 @@
-import SearchContact from './contact/SearchContact'
+import SearchContact from './teacher/SearchTeacher'
 import { PURPLE, COMMENT, BACKGROUND } from '../helpers/color.js'
 const Navbar = () => {
   return (
