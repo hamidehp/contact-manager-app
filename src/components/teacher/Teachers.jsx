@@ -21,7 +21,11 @@ const Teachers = ({ Teachers,Loading }) => {
       </section>
       {Loading ? <Spinner /> : <section className='container'>
         <div className='row'>
-          {Teachers.length > 0 ? (
+        <div className='col-md-6'>
+        <Teacher />
+        </div>
+        
+          {/* {Teachers.length > 0 ? (
             Teachers.map(c => <Teacher key={c.id} Teacher={c} />)
           ) : (
             <div
@@ -37,7 +41,7 @@ const Teachers = ({ Teachers,Loading }) => {
                 className='w-50'
               />
             </div>
-          )}
+          )} */}
         </div>
       </section>}
       
