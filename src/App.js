@@ -21,7 +21,7 @@ const App = () => {
 
         const { data: teachersData } = await getAllTeachers();
         
-        const { data: groupsData } = await getAllGroups();
+        const { data: groupsData } = await getAllGroups() ;
         
 
         setTeachers (teachersData) ;
