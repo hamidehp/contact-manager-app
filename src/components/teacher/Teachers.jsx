@@ -4,7 +4,10 @@ import Spinner from '../Spinner'
 
 const Teachers = ({ Teachers,Loading }) => {
   return (
+    
+    
     <>
+    
       <section className='container'>
         <div className='grid'>
           <div className='row'>
@@ -19,13 +22,15 @@ const Teachers = ({ Teachers,Loading }) => {
           </div>
         </div>
       </section>
-      {Loading ? <Spinner /> : <section className='container'>
+      
+      {Loading ? <Spinner /> : 
+      <section className='container'>
         <div className='row'>
         <div className='col-md-6'>
-        <Teacher />
-        </div>
+        {/* <Teacher /> */}
         
-          {/* {Teachers.length > 0 ? (
+        
+          {Teachers.length > 0 ? (
             Teachers.map(c => <Teacher key={c.id} Teacher={c} />)
           ) : (
             <div
@@ -41,7 +46,8 @@ const Teachers = ({ Teachers,Loading }) => {
                 className='w-50'
               />
             </div>
-          )} */}
+          )}
+        </div>
         </div>
       </section>}
       

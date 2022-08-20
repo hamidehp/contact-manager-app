@@ -1,15 +1,53 @@
 {
-    "teachers" :[],
-    "groups":[
-        {"id":"1",
-         "name":"همکار"},
-         {"id":"2",
-         "name":"دوست"},
-         {"id":"3",
-         "name":"فامیل"},
-         {"id":"1",
-         "name":"سرویس"},
-         {"id":"1",
-         "name":"آشنا"}
-    ]
+  "teachers": [
+    {
+      "fullname": "مهدی دهقان",
+      "photo": "",
+      "mobile": "09132221212",
+      "email": "mehdi-dehghan@msc.ir",
+      "job": "رییس برنامه ریزی و بهبود عملکرد",
+      "group": "1",
+      "id": 1
+    },
+    {
+      "fullname": "مهدی مهرابی",
+      "photo": "http://mahdi-mehrabi.ir/wp-content/uploads/2022/07/IMG_20210822_175823_782n-2.jpg",
+      "mobile": "09131234512",
+      "email": "mehdi-mehrabi@msc.ir",
+      "job": "کارشناس برنامه ریزی و بهبود عملکرد",
+      "group": "1",
+      "id": 2
+    },
+    {
+      "fullname": "محمد پارسایی",
+      "photo": "",
+      "mobile": "09130014112",
+      "email": "mohamad-parsaei@msc.ir",
+      "job": "تکنسین اجرای آموزش",
+      "group": "5",
+      "id": 3
+    }
+  ],
+  "groups": [
+    {
+      "id": "1",
+      "name": "همکار"
+    },
+    {
+      "id": "2",
+      "name": "دوست"
+    },
+    {
+      "id": "3",
+      "name": "فامیل"
+    },
+    {
+      "id": "1",
+      "name": "سرویس"
+    },
+    {
+      "id": "1",
+      "name": "آشنا"
+    }
+  ]
 }

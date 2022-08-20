@@ -1,7 +1,16 @@
-const AddTeacher=()=>{
+import { Link } from "react-router-dom";
+//import {spinner} f
+const AddTeacher=(loading)=>{
 
     return(
-        <p>add</p>
-    );
+        <>
+        {loading ? (<spinner />):(
+        <>
+        <section className="p-3">
+            <img />
+
+        </section>
+        </>)}
+        </>    );
 }
 export default AddTeacher;
