@@ -12,6 +12,14 @@ import {getAllTeachers,getAllGroups} from './services/TeacherService';
 const App = () => {
   const [Loading, setLoading] = useState(false);
   const [getTeachers, setTeachers] = useState([]);
+  const [getTeacher, setTeacher] = useState({
+    fullname:"",
+    photo   :"",
+    mobile  :"",
+    email   :"",
+    job     :"",
+    group   :""
+  });
   const [getGroups, setGroups] = useState([]);
 
   useEffect(() => {
@@ -47,7 +55,7 @@ const App = () => {
           element={<Teachers Teachers={getTeachers} Loading={Loading} />}
         />
 
-        <Route path='/teachers/add' element={<AddTeacher />} />
+        <Route path='/teachers/add' element={<AddTeacher Loading={Loading}/>} />
         <Route path='/teachers/:teacherId' element={<Teacher />} />
         <Route path='/teachers/edit/:teacherId' element={<EditTeacher />} />
       </Routes>

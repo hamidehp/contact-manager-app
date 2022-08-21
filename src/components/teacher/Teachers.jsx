@@ -1,7 +1,7 @@
-import { CURRENTLINE, PINK, ORANGE } from '../../helpers/color'
-import Teacher from './Teacher'
-import Spinner from '../Spinner'
-
+import { CURRENTLINE, PINK, ORANGE } from '../../helpers/color';
+import Teacher from './Teacher';
+import Spinner from '../Spinner';
+import {Link} from 'react-router-dom';
 const Teachers = ({ Teachers,Loading }) => {
   return (
     
@@ -13,10 +13,10 @@ const Teachers = ({ Teachers,Loading }) => {
           <div className='row'>
             <div className='col'>
               <p className='h3'>
-                <button className='btn mx-2' style={{ backgroundColor: PINK }}>
+                <Link to={"/teachers/add"} className='btn mx-2' style={{ backgroundColor: PINK }}>
                   مدرس جدید
                   <i className='fa fa-plus-circle mx-2' />
-                </button>
+                </Link>
               </p>
             </div>
           </div>
