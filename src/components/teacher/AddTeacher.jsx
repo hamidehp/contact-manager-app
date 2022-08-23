@@ -2,9 +2,11 @@ import { toBeRequired } from '@testing-library/jest-dom/dist/matchers'
 import { Link } from 'react-router-dom'
 import Spinner from '../Spinner'
 import { COMMENT, GREEN, PURPLE } from '../../helpers/color'
+import Teacher from './Teacher'
 
-const AddTeacher = (loading, contact, setteacherInfo) => {
+const AddTeacher = (loading, Teacher, setTeacherInfo,groups,createTeacherForm) => {
   return (
+    
      <>
        {!loading ? (
          <Spinner />
@@ -33,12 +35,12 @@ const AddTeacher = (loading, contact, setteacherInfo) => {
           <hr style={{ backgroundcolor: GREEN }} />
           <div className='row mt-5'>
             <div className='col-md-4'>
-              <form>
+              <form onSubmit ={createTeacherForm}>
                 <div className='mb-2'>
                   <input
                     name='fullname'
-                    //  value={teacher.fullname}
-                    //    onChange={setteacherInfo}
+                      value={Teacher.fullname}
+                        onChange={setTeacherInfo}
                     type='text'
                     className='form-control'
                     placeholder='نام و نام خانوادگی'
@@ -48,8 +50,8 @@ const AddTeacher = (loading, contact, setteacherInfo) => {
                 <div className='mb-2'>
                   <input
                     name='photo'
-                    //  value={teacher.photo}
-                    //    onChange={setteacherInfo}
+                    value={Teacher.photo}
+                        onChange={setTeacherInfo}
                     type='text'
                     className='form-control'
                     placeholder='آدرس تصویر'
@@ -58,8 +60,8 @@ const AddTeacher = (loading, contact, setteacherInfo) => {
                 <div className='mb-2'>
                   <input
                     name='mobile'
-                    //  value={teacher.fullname}
-                    //    onChange={setteacherInfo}
+                    value={Teacher.mobile}
+                        onChange={setTeacherInfo}
                     type='text'
                     className='form-control'
                     placeholder='شماره موبایل'
@@ -69,8 +71,8 @@ const AddTeacher = (loading, contact, setteacherInfo) => {
                 <div className='mb-2'>
                   <input
                     name='email'
-                    //  value={teacher.fullname}
-                    //    onChange={setteacherInfo}
+                    value={Teacher.email}
+                    onChange={setTeacherInfo}
                     type='text'
                     className='form-control'
                     placeholder='آدرس ایمیل'
@@ -79,16 +81,18 @@ const AddTeacher = (loading, contact, setteacherInfo) => {
                 <div className='mb-2'>
                   <input
                     name='job'
-                    //  value={teacher.fullname}
-                    //    onChange={setteacherInfo}
+                    value={Teacher.job}
+                    onChange={setTeacherInfo}
                     type='text'
                     className='form-control'
                     placeholder='شغل'
                   />
                 </div>
                 <div className='mb-2'>
-                  <select name='group' required={true} className='form-control'>
-                    <option value=''>انتخاب گروه</option>
+                  <select name='group'  className='form-control'>
+                  <option  value="" ></option>
+                 
+                    {/* {groups.length >0 && groups.map((group)=>( <option key={group.id} value={group.id} >{group.name}</option>))}   */}
                   </select>
                 </div>
                 <div className='mx-2'>

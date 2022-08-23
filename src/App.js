@@ -7,7 +7,7 @@ import AddTeacher from './components/teacher/AddTeacher';
 import EditTeacher from './components/teacher/EditTeacher';
 import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {getAllTeachers,getAllGroups} from './services/TeacherService';
+import {getAllTeachers,getAllGroups, createTeacher} from './services/TeacherService';
 //import {AddTeacher,Teachers,Teacher,EditTeacher,ViewTeacher} from './components/teacher/index';
 const App = () => {
   const [Loading, setLoading] = useState(false);
@@ -21,6 +21,7 @@ const App = () => {
     group   :""
   });
   const [getGroups, setGroups] = useState([]);
+  const Navigate=useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,8 +43,20 @@ const App = () => {
       }
     }
     fetchData();
-  }, [])
-
+  }, []);
+  const createTeacherForm= async event =>{ event.preventDefault();
+    try{
+      const {status}=await createTeacher(getTeacher);
+      if (status===201){
+        setTeacher({});
+        Navigate("/teachers");
+      }
+    }catch(err){
+      console.log(err.message);
+    }}
+  const setTeacherInfo =(event) =>{
+    setTeacher({...getTeacher,[event.target.name]:event.target.value})
+  }
   return (
     <div className='App'>
       <Navbar />
@@ -52,7 +65,7 @@ const App = () => {
         <Route path='/' element={<Navigate to='/teachers' />} />
         <Route
           path='/teachers'
-          element={<Teachers Teachers={getTeachers} Loading={Loading} />}
+          element={<Teachers Teachers={getTeachers} Loading={Loading}  setTeacherInfo={setTeacherInfo} Teacher={getTeacher} groups={getGroups} createTeacherForm={createTeacherForm}/>}
         />
 
         <Route path='/teachers/add' element={<AddTeacher Loading={Loading}/>} />

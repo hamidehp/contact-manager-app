@@ -13,7 +13,7 @@ const Teacher =({Teacher})=>{
             <div className='col-md-3  col-sm-3'>
               <img
                 //src={require("../../assets/placeholder_avatar.jpg")}
-                src={(Teacher.photo) ? Teacher.photo : require("../../assets/placeholder_avatar.jpg")}
+                 src={(Teacher.photo) ? Teacher.photo : require("../../assets/placeholder_avatar.jpg")}
                 alt={Teacher.fullname}
                 style={{ border: `1px solid ${PURPLE}` }}
                 className='img-fluid rounded'
