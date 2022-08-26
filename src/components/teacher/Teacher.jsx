@@ -5,6 +5,7 @@ import {
     RED,
     CYAN
   } from '../../helpers/color';
+  import { Link } from 'react-router-dom';
 const Teacher =({Teacher})=>{
     return(
         <div style={{ backgroundColor: CURRENTLINE }} className='cardmy-2'>
@@ -37,12 +38,12 @@ const Teacher =({Teacher})=>{
               </ul>
             </div>
             <div className='col-md-1 col-sm-1 d-flex-column alidn-items-center' dir="rtl">
-              <button
+              <Link to={`/teachers/${Teacher.id}`}
                 className='btn my-1'
                 style={{ backgroundColor: ORANGE }}
               >
                 <i className='fa fa-eye' />
-              </button>
+              </Link>
               <button
                 className='btn my-1'
                 style={{ backgroundColor: CYAN }}

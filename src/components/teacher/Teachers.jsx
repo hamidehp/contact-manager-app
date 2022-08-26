@@ -2,6 +2,7 @@ import { CURRENTLINE, PINK, ORANGE } from '../../helpers/color';
 import Teacher from './Teacher';
 import Spinner from '../Spinner';
 import {Link} from 'react-router-dom';
+
 const Teachers = ({ Teachers,Loading }) => {
   return (
     

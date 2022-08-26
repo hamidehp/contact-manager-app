@@ -8,7 +8,9 @@ body {
 input[type='text']::-webkit-input-placeholder,
 input[type='email']::-webkit-input-placeholder,
 input[type='number']::-webkit-input-placeholder {
-  color: #f8f8f4;
+  color: #f8f8f4 !important;
+  background-color: #44475a !important;
+  border-color: #bd93f9 !important;
 }
 input[type='text'],
 input[type='email'],
