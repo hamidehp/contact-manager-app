@@ -7,7 +7,13 @@ import EditTeacher from './components/teacher/EditTeacher'
 import ViewTeacher from './components/teacher/ViewTeacher'
 import { Route, Routes, Navigate, useNavigate } from 'react-router-dom'
 
-import { CURRENTLINE, PURPLE, YELLOW, FORGROUND,COMMENT } from './helpers/color'
+import {
+  CURRENTLINE,
+  PURPLE,
+  YELLOW,
+  FORGROUND,
+  COMMENT
+} from './helpers/color'
 
 import {
   getAllTeachers,
@@ -20,6 +26,7 @@ import { confirmAlert } from 'react-confirm-alert'
 const App = () => {
   const [Loading, setLoading] = useState(false)
   const [getTeachers, setTeachers] = useState([])
+  const [getFilteredTeachers,setFilteredTeachers]=useState([]);
   const [forceRender, setforceRender] = useState(false)
   const [getGroups, setGroups] = useState([])
   const [getTeacher, setTeacher] = useState({
@@ -30,8 +37,10 @@ const App = () => {
     job: '',
     group: ''
   })
-
+  const [query, setQuery] = useState({ text: "" })
   const Navigat = useNavigate()
+  
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +52,7 @@ const App = () => {
         const { data: groupsData } = await getAllGroups()
 
         setTeachers(teachersData)
-
+        setFilteredTeachers(teachersData)
         setGroups(groupsData)
 
         setLoading(false)
@@ -90,41 +99,41 @@ const App = () => {
   }
   const confirm = (teacherId, teacherFullName) => {
     confirmAlert({
-      
-       customUI: ({ onClose }) => {
-         return (
-         
-           <div
-             dir='rtl'
-             style={{
-               backgroundColor: CURRENTLINE,
-               border: `1px solid${PURPLE}`,
-               borderRadius: '1em'
-             }}
-             className='p-4'
-           >
-             <h1 style={{ color: YELLOW }}>پاک کردن مدرس</h1>
-             <p style={{ color: FORGROUND }}>
-               آیا از حذف مدرس {teacherFullName} مطمئن هستید؟
-             </p>
-              <button onClick={()=>
-             {
-               removeTeacher(teacherId);
-               onClose();
-             }}
-             className="btn mx-2"
-             style={{backgroundColor:PURPLE}}>
-
-            تایید </button>
-           <button 
-             onClick={onClose}          
-             className="btn"
-             style={{backgroundColor:COMMENT}}>
-
-            انصراف </button>
-           </div>
-         )
-       }
+      customUI: ({ onClose }) => {
+        return (
+          <div
+            dir='rtl'
+            style={{
+              backgroundColor: CURRENTLINE,
+              border: `1px solid${PURPLE}`,
+              borderRadius: '1em'
+            }}
+            className='p-4'
+          >
+            <h1 style={{ color: YELLOW }}>پاک کردن مدرس</h1>
+            <p style={{ color: FORGROUND }}>
+              آیا از حذف مدرس {teacherFullName} مطمئن هستید؟
+            </p>
+            <button
+              onClick={() => {
+                removeTeacher(teacherId)
+                onClose()
+              }}
+              className='btn mx-2'
+              style={{ backgroundColor: PURPLE }}
+            >
+              تایید{' '}
+            </button>
+            <button
+              onClick={onClose}
+              className='btn'
+              style={{ backgroundColor: COMMENT }}
+            >
+              انصراف{' '}
+            </button>
+          </div>
+        )
+      }
     })
   }
   const removeTeacher = async teacherId => {
@@ -141,15 +150,34 @@ const App = () => {
       setLoading(false)
     }
   }
+  const teacherSearch = (event) => {
+    setQuery({ ...query, text:event.target.value })
+    const allTeachers = getTeachers.filter((teacher) => {
+      return teacher.fullname
+      // .toLowerCase()
+        
+        .includes(event.target.value
+          // .toLowerCase()
+          );
+
+    })
+    setFilteredTeachers(allTeachers);
+  }
   return (
     <div className='App'>
-      <Navbar />
+      <Navbar query={query} search={teacherSearch} />
 
       <Routes>
         <Route path='/' element={<Navigate to='/teachers' />} />
         <Route
           path='/teachers'
-          element={<Teachers Teachers={getTeachers} Loading={Loading}  confirmDelete={confirm}/>}
+          element={
+            <Teachers
+              Teachers={getFilteredTeachers}
+              Loading={Loading}
+              confirmDelete={confirm}
+            />
+          }
         />
 
         <Route

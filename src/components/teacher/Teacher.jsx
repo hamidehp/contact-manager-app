@@ -11,7 +11,7 @@ const Teacher =({Teacher,confirmDelete})=>{
         <div style={{ backgroundColor: CURRENTLINE }} className='cardmy-2'>
         <div className='card-body'>
           <div className='row align-items-center d-flex justify-content-around'>
-            <div className='col-md-3  col-sm-3'>
+            <div className='col-md-4  col-sm-4'>
               <img
                 //src={require("../../assets/placeholder_avatar.jpg")}
                  src={(Teacher.photo) ? Teacher.photo : require("../../assets/placeholder_avatar.jpg")}
@@ -20,7 +20,7 @@ const Teacher =({Teacher,confirmDelete})=>{
                 className='img-fluid rounded'
               />
             </div>
-            <div className='col-md-6 col-sm-6 '>
+            <div className='col-md-7 col-sm-7 '>
               <ul className='list-group'>
                 <li className='list-group-item list-group-item-dark'>
                   نام و نام خانوادگی :{"  "}

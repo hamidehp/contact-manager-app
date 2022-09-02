@@ -1,5 +1,5 @@
 import {PURPLE,COMMENT} from '../../helpers/color';
-const SearchTeacher = () => {
+const SearchTeacher = ({query,search}) => {
   return (
     <div className='input-group mx-2 w=75 ' dir='rtl'>
       <span
@@ -13,9 +13,11 @@ const SearchTeacher = () => {
         dir='rtl'
         type='text'
         className='form-control'
-        placeholder='جستجوی مخاطب'
+        placeholder='جستجوی مدرس'
         aria-label='search'
         aria-describedby='basic-addon1'
+        value={query.text}
+        onChange={search}
       />
     </div>
   )

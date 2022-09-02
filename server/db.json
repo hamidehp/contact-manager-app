@@ -1,12 +1,18 @@
 {
   "teachers": [
     {
-      "fullname": "مهدی دهقان",
-      "photo": "",
+      "fullname": [
+        "غلامرضا کمالی"
+      ],
+      "photo": [
+        "https://media.irasin.ir/d/2022/05/13/2/34265.jpg"
+      ],
       "mobile": "09132221212",
-      "email": "mehdi-dehghan@msc.ir",
+      "email": [
+        "gh_kamali@msc.ir"
+      ],
       "job": [
-        "رییس برنامه ریزی و بهبود عملکرد "
+        "رییس اجرای آمورش "
       ],
       "group": [
         "1"
@@ -42,6 +48,15 @@
       "job": "برنامه نویس",
       "group": "5",
       "id": 4
+    },
+    {
+      "fullname": "ابراهیم کاظمی",
+      "photo": "https://www.karkhanedar.com/wp-content/uploads/2020/08/%D8%A7%D8%A8%D8%B1%D8%A7%D9%87%DB%8C%D9%85%DB%8C-%D9%85%D8%AF%DB%8C%D8%B1-%D8%A7%D9%85%D9%88%D8%B1-%D8%A7%D9%86%D8%B3%D8%A7%D9%86%DB%8C-%D9%81%D9%88%D9%84%D8%A7%D8%AF-%D9%85%D8%A8%D8%A7%D8%B1%DA%A9%D9%87.jpg",
+      "mobile": "09133216547",
+      "email": "e.kazemi@msc.ir",
+      "job": "مدیر آموزش",
+      "group": "1",
+      "id": 5
     }
   ],
   "groups": [

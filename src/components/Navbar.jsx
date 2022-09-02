@@ -1,6 +1,9 @@
-import SearchContact from './teacher/SearchTeacher'
+
 import { PURPLE, COMMENT, BACKGROUND } from '../helpers/color.js'
-const Navbar = () => {
+import SearchTeacher from './teacher/SearchTeacher';
+import { useLocation } from 'react-router-dom';
+const Navbar = ({query,search}) => {
+  const Location=useLocation();
   return (
     <nav className='navbar navbar-dark 
     navbar-expand-sm shadow-lg' style={{backgroundColor:BACKGROUND}}>
@@ -12,9 +15,10 @@ const Navbar = () => {
             <span style={{ color: PURPLE }}>مدرسان آموزش</span>
             </div>
           </div>
-          <div className='col'>
-            <SearchContact />
-          </div>
+          {Location.pathname==="/teachers" ?
+         ( <div className='col'>
+            <SearchTeacher query={query} search={search} />
+          </div>):null}
         </div>
       </div>
     </nav>

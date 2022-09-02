@@ -10,10 +10,10 @@ const Teachers = ({ Teachers, Loading, confirmDelete }) => {
         <div className='grid'>
           <div className='row'>
             <div className='col'>
-              <p className='h3'>
+              <p className='h3 float-end'>
                 <Link
                   to={'/teachers/add'}
-                  className='btn mx-2'
+                  className='btn m-2'
                   style={{ backgroundColor: PINK }}
                 >
                   مدرس جدید
@@ -30,13 +30,15 @@ const Teachers = ({ Teachers, Loading, confirmDelete }) => {
       ) : (
         <section className='container'>
           <div className='row'>
-            <div className='col-md-6'>
-              {/* <Teacher /> */}
-
+            <div className='col-md-7'>
               {Teachers.length > 0 ? (
-                Teachers.map(c => <Teacher key={c.id} 
-                  confirmDelete={()=> confirmDelete(c.id, c.fullname)}
-                  Teacher={c} />)
+                Teachers.map(c => (
+                  <Teacher
+                    key={c.id}
+                    confirmDelete={() => confirmDelete(c.id, c.fullname)}
+                    Teacher={c}
+                  />
+                ))
               ) : (
                 <div
                   className='text-center py-5'
