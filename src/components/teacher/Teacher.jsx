@@ -6,7 +6,7 @@ import {
     CYAN
   } from '../../helpers/color';
   import { Link } from 'react-router-dom';
-const Teacher =({Teacher})=>{
+const Teacher =({Teacher,confirmDelete})=>{
     return(
         <div style={{ backgroundColor: CURRENTLINE }} className='cardmy-2'>
         <div className='card-body'>
@@ -23,34 +23,34 @@ const Teacher =({Teacher})=>{
             <div className='col-md-6 col-sm-6 '>
               <ul className='list-group'>
                 <li className='list-group-item list-group-item-dark'>
-                  نام و نام خانوادگی{"  "}
+                  نام و نام خانوادگی :{"  "}
                   <span className='fw-bold'> {Teacher.fullname}</span>
                 </li>
                 <li className='list-group-item list-group-item-dark'>
-                  شماره موبایل{"  "}
+                  شماره موبایل :{"  "}
                   <span className='fw-bold'> {Teacher.mobile}</span>
                 </li>
 
                 <li className='list-group-item list-group-item-dark'>
-                  آدرس ایمیل{"  "}
+                  آدرس ایمیل :{"  "}
                   <span className='fw-bold'> {Teacher.email}</span>
                 </li>
               </ul>
             </div>
             <div className='col-md-1 col-sm-1 d-flex-column alidn-items-center' dir="rtl">
-              <Link to={`/teachers/${Teacher.id}`}
+              <Link to={`/teachers/view/${Teacher.id}`}
                 className='btn my-1'
                 style={{ backgroundColor: ORANGE }}
               >
                 <i className='fa fa-eye' />
               </Link>
-              <button
+              <Link to={`/teachers/edit/${Teacher.id}`}
                 className='btn my-1'
                 style={{ backgroundColor: CYAN }}
               >
                 <i className='fa fa-pencil' />
-              </button>
-              <button
+              </Link>
+              <button onClick={confirmDelete}
                 className='btn my-1'
                 style={{ backgroundColor: RED }}
               >

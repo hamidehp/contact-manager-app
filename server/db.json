@@ -5,9 +5,16 @@
       "photo": "",
       "mobile": "09132221212",
       "email": "mehdi-dehghan@msc.ir",
-      "job": "رییس برنامه ریزی و بهبود عملکرد",
-      "group": "1",
-      "id": 1
+      "job": [
+        "رییس برنامه ریزی و بهبود عملکرد "
+      ],
+      "group": [
+        "1"
+      ],
+      "id": 1,
+      "undefined": [
+        "رییس برنامه ریزی و بهبود عملکر"
+      ]
     },
     {
       "fullname": "مهدی مهرابی",
@@ -33,17 +40,8 @@
       "mobile": "09133053622",
       "email": "hamideh_p@yahoo.com",
       "job": "برنامه نویس",
-      "group": "1",
+      "group": "5",
       "id": 4
-    },
-    {
-      "fullname": "حمیده پورهمایون",
-      "photo": "",
-      "mobile": "09133053622",
-      "email": "hamideh_p@yahoo.com",
-      "job": "برنامه نویس",
-      "group": "",
-      "id": 5
     }
   ],
   "groups": [

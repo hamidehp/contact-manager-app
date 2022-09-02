@@ -2,23 +2,25 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
 import Teachers from './components/teacher/Teachers'
-import Teacher from './components/teacher/Teacher'
 import AddTeacher from './components/teacher/AddTeacher'
 import EditTeacher from './components/teacher/EditTeacher'
 import ViewTeacher from './components/teacher/ViewTeacher'
 import { Route, Routes, Navigate, useNavigate } from 'react-router-dom'
 
+import { CURRENTLINE, PURPLE, YELLOW, FORGROUND,COMMENT } from './helpers/color'
+
 import {
   getAllTeachers,
   getAllGroups,
-  createTeacher
+  createTeacher,
+  deleteTeacher
 } from './services/TeacherService'
+import { confirmAlert } from 'react-confirm-alert'
 //import {AddTeacher,Teachers,Teacher,EditTeacher,ViewTeacher} from './components/teacher/index';
 const App = () => {
   const [Loading, setLoading] = useState(false)
   const [getTeachers, setTeachers] = useState([])
   const [forceRender, setforceRender] = useState(false)
-  // const [getTeacher, setTeacher] = useState([]);
   const [getGroups, setGroups] = useState([])
   const [getTeacher, setTeacher] = useState({
     fullname: '',
@@ -29,7 +31,7 @@ const App = () => {
     group: ''
   })
 
-  const Navigate = useNavigate()
+  const Navigat = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,9 +76,9 @@ const App = () => {
     try {
       const { status } = await createTeacher(getTeacher)
       if (status === 201) {
-        setTeacher({});
-        setforceRender(!forceRender);
-        Navigate('/teachers');
+        setTeacher({})
+        setforceRender(!forceRender)
+        Navigat('/teachers')
       }
     } catch (err) {
       console.log(err.message)
@@ -86,7 +88,59 @@ const App = () => {
   const setTeacherInfo = event => {
     setTeacher({ ...getTeacher, [event.target.name]: event.target.value })
   }
+  const confirm = (teacherId, teacherFullName) => {
+    confirmAlert({
+      
+       customUI: ({ onClose }) => {
+         return (
+         
+           <div
+             dir='rtl'
+             style={{
+               backgroundColor: CURRENTLINE,
+               border: `1px solid${PURPLE}`,
+               borderRadius: '1em'
+             }}
+             className='p-4'
+           >
+             <h1 style={{ color: YELLOW }}>پاک کردن مدرس</h1>
+             <p style={{ color: FORGROUND }}>
+               آیا از حذف مدرس {teacherFullName} مطمئن هستید؟
+             </p>
+              <button onClick={()=>
+             {
+               removeTeacher(teacherId);
+               onClose();
+             }}
+             className="btn mx-2"
+             style={{backgroundColor:PURPLE}}>
 
+            تایید </button>
+           <button 
+             onClick={onClose}          
+             className="btn"
+             style={{backgroundColor:COMMENT}}>
+
+            انصراف </button>
+           </div>
+         )
+       }
+    })
+  }
+  const removeTeacher = async teacherId => {
+    try {
+      setLoading(true)
+      const response = await deleteTeacher(teacherId)
+      if (response) {
+        const { data: teachersData } = await getAllTeachers()
+        setTeachers(teachersData)
+        setLoading(false)
+      }
+    } catch (err) {
+      console.log(err.message)
+      setLoading(false)
+    }
+  }
   return (
     <div className='App'>
       <Navbar />
@@ -95,7 +149,7 @@ const App = () => {
         <Route path='/' element={<Navigate to='/teachers' />} />
         <Route
           path='/teachers'
-          element={<Teachers Teachers={getTeachers} Loading={Loading} />}
+          element={<Teachers Teachers={getTeachers} Loading={Loading}  confirmDelete={confirm}/>}
         />
 
         <Route
@@ -110,9 +164,16 @@ const App = () => {
             />
           }
         />
-        <Route path='/teachers/:teacherId' element={<Teacher />} />
-        <Route path='/teachers/edit/:teacherId' element={<EditTeacher />} />
-        <Route path='/teachers/view/:teacherId' element={<ViewTeacher Loading={Loading} teacher={getTeacher} group={getGroups}/>} />
+        <Route
+          path='/teachers/edit/:teacherId'
+          element={
+            <EditTeacher
+              forceRender={forceRender}
+              setforceRender={setforceRender}
+            />
+          }
+        />
+        <Route path='/teachers/view/:teacherId' element={<ViewTeacher />} />
       </Routes>
     </div>
   )
