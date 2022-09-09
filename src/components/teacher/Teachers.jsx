@@ -2,8 +2,11 @@ import { CURRENTLINE, PINK, ORANGE } from '../../helpers/color'
 import Teacher from './Teacher'
 import Spinner from '../Spinner'
 import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { teacherContext } from '../../context/teacherContext'
 
-const Teachers = ({ Teachers, Loading, confirmDelete }) => {
+const Teachers = () => {
+  const { filteredTeachers, Loading, deleteTeacher } =useContext(teacherContext);
   return (
     <>
       <section className='container'>
@@ -30,12 +33,12 @@ const Teachers = ({ Teachers, Loading, confirmDelete }) => {
       ) : (
         <section className='container'>
           <div className='row'>
-            <div className='col-md-7'>
-              {Teachers.length > 0 ? (
-                Teachers.map(c => (
+          
+              {filteredTeachers.length > 0 ? (
+                filteredTeachers.map(c => (
                   <Teacher
                     key={c.id}
-                    confirmDelete={() => confirmDelete(c.id, c.fullname)}
+                    deleteTeacher={() => deleteTeacher(c.id, c.fullname)}
                     Teacher={c}
                   />
                 ))
@@ -55,7 +58,7 @@ const Teachers = ({ Teachers, Loading, confirmDelete }) => {
                 </div>
               )}
             </div>
-          </div>
+        
         </section>
       )}
     </>

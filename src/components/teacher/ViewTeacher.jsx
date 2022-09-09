@@ -3,37 +3,39 @@ import { Link, useParams } from 'react-router-dom';
 import Spinner from '../Spinner';
 import { useState, useEffect } from 'react';
 import { getGroup, getTeacher } from '../../services/TeacherService';
-
+import { teacherContext } from '../../context/teacherContext';
+import { useContext } from 'react';
 const ViewTeacher = () => {
   const { teacherId } = useParams();
 
   const [ state, setState ] = useState({
-    Loading: false,
+    
     teacher: {},
     group: {}
   });
+  const{Loading,setLoading}=useContext(teacherContext)
  
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setState({ ...state, Loading: true })
+        setLoading(true)
         const { data: teacherData } = await getTeacher(teacherId);
         const { data: groupData } = await getGroup(teacherData.group);
+        setLoading(false)
         setState({
           ...state,
-          Loading: false,
           teacher: teacherData,
           group: groupData
         })
       } catch (err) {
         console.log(err.message)
-        setState({ ...state, Loading: false })
+        setLoading(false)
       }
     }
     fetchData();
   }, []);
   
-  const { Loading, teacher, group } =state;
+  const {  teacher, group } =state;
   return (
     <>
       <section className='view-contact-intro p3'>

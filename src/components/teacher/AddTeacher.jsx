@@ -3,13 +3,16 @@ import { Link } from 'react-router-dom'
 import Spinner from '../Spinner'
 import { COMMENT, GREEN, PURPLE } from '../../helpers/color'
 import { getTeacher } from '../../services/TeacherService'
-const AddTeacher = ({
-  Loading,
-  setTeacherInfo,
-  groups,
-  createTeacherForm,
-  teacher
-}) => {
+import { useContext } from 'react'
+import { teacherContext } from '../../context/teacherContext'
+const AddTeacher = () => {
+  const {
+    Loading,
+    onTeacherChange,
+    groups,
+    createTeacher,
+    teacher
+  } = useContext(teacherContext)
   return (
     <>
       {Loading ? (
@@ -42,12 +45,12 @@ const AddTeacher = ({
               <hr style={{ backgroundcolor: GREEN }} />
               <div className='row mt-5'>
                 <div className='col-md-4'>
-                  <form onSubmit={createTeacherForm}>
+                  <form onSubmit={createTeacher}>
                     <div className='mb-2'>
                       <input
                         name='fullname'
                         value={teacher.fullname}
-                        onChange={setTeacherInfo}
+                        onChange={onTeacherChange}
                         type='text'
                         className='form-control'
                         placeholder='نام و نام خانوادگی'
@@ -58,7 +61,7 @@ const AddTeacher = ({
                       <input
                         name='photo'
                         value={teacher.photo}
-                        onChange={setTeacherInfo}
+                        onChange={onTeacherChange}
                         type='text'
                         className='form-control'
                         placeholder='آدرس تصویر'
@@ -68,7 +71,7 @@ const AddTeacher = ({
                       <input
                         name='mobile'
                         value={teacher.mobile}
-                        onChange={setTeacherInfo}
+                        onChange={onTeacherChange}
                         type='text'
                         className='form-control'
                         placeholder='شماره موبایل'
@@ -79,7 +82,7 @@ const AddTeacher = ({
                       <input
                         name='email'
                         value={teacher.email}
-                        onChange={setTeacherInfo}
+                        onChange={onTeacherChange}
                         type='text'
                         className='form-control'
                         placeholder='آدرس ایمیل'
@@ -89,7 +92,7 @@ const AddTeacher = ({
                       <input
                         name='job'
                         value={teacher.job}
-                        onChange={setTeacherInfo}
+                        onChange={onTeacherChange}
                         type='text'
                         className='form-control'
                         placeholder='شغل'
@@ -99,7 +102,7 @@ const AddTeacher = ({
                       <select
                         name='group'
                         value={teacher.group}
-                        onChange={setTeacherInfo}
+                        onChange={onTeacherChange}
                         className='form-control'
                       >
                         <option value=''>انتخاب گروه</option>

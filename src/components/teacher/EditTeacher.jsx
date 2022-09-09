@@ -1,71 +1,64 @@
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { teacherContext } from '../../context/teacherContext';
+import { useContext } from 'react';
 import { useNavigate, useParams ,Link} from 'react-router-dom'
 import {
-  getAllGroups,
   getTeacher,
   updateTeacher
 } from '../../services/TeacherService'
 import Spinner from '../Spinner'
 import { COMMENT,  PURPLE, ORANGE } from '../../helpers/color'
 
-const EditTeacher = ({forceRender,setforceRender}) => {
+const EditTeacher = () => {
   const { teacherId } = useParams();
+ 
   const navigate = useNavigate();
-  const [state, setState] = useState({
-    Loading: false,
-    teacher: {
-      fullname: '',
-      photo: '',
-      mobile: '',
-      email: '',
-      job: '',
-      group: ''
-    },
-    groups: []
-  });
-  
+  const [teacher, setTeacher] = useState({});
+  const {Loading,groups,setLoading,teachers,setTeachers,setFilteredTeachers}=useContext(teacherContext);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setState({ ...state, Loading: true })
+        setLoading(true)
         const { data: teacherData } = await getTeacher(teacherId)
-        const { data: groupData } = await getAllGroups();
-        setState({
-          ...state,
-          Loading: false,
-          teacher: teacherData,
-          groups: groupData
-        })
+        setLoading(false)
+        setTeacher( teacherData)
       } catch (err) {
         console.log(err)
-        setState({ ...state, Loading: false })
+        setLoading(false)
       }
     }
     fetchData();
   }, []);
-  const setTeacherInfo = event => {
-    setState({
-      ...state,
-      teacher: { ...state.teacher, [event.target.name]: [event.target.value] }
+  const onTeacherChange = event => {
+    setTeacher({
+      ...teacher,
+       [event.target.name]: event.target.value
     })
   }
   const submitForm = async event => {
     event.preventDefault()
     try {
-      setState({ ...state, Loading: true })
-      const { data } = await updateTeacher(state.teacher, teacherId)
-      setState({ ...state, Loading: false })
-      if (data) {
-        setforceRender(!forceRender);
+      setLoading(true)
+      const { data,status } = await updateTeacher(teacher, teacherId)
+      
+      if (status ===200) {
+        setLoading(false)
+        const allTeachers=[...teachers];
+        const teacherIndex=allTeachers.findIndex(c =>c.id ===parseInt(teacherId));
+       // console.log(allTeachers[teacherIndex]);
+        allTeachers[teacherIndex]={...data};
+        //ضconsole.log(allTeachers[teacherIndex]);
+        setTeachers(allTeachers);
+        setFilteredTeachers(allTeachers);
         navigate('/teachers')
       }
     } catch (err) {
       console.log(err)
-      setState({ ...state, Loading: false })
+      setLoading(false)
     }
   }
-  const { Loading, teacher, groups } = state
+ 
   return (
     <>
       {Loading ? (
@@ -90,7 +83,7 @@ const EditTeacher = ({forceRender,setforceRender}) => {
                       <input
                         name='fullname'
                         value={teacher.fullname}
-                        onChange={setTeacherInfo}
+                        onChange={onTeacherChange}
                         type='text'
                         className='form-control'
                         placeholder='نام و نام خانوادگی'
@@ -101,7 +94,7 @@ const EditTeacher = ({forceRender,setforceRender}) => {
                       <input
                         name='photo'
                         value={teacher.photo}
-                        onChange={setTeacherInfo}
+                        onChange={onTeacherChange}
                         type='text'
                         className='form-control'
                         placeholder='آدرس تصویر'
@@ -111,7 +104,7 @@ const EditTeacher = ({forceRender,setforceRender}) => {
                       <input
                         name='mobile'
                         value={teacher.mobile}
-                        onChange={setTeacherInfo}
+                        onChange={onTeacherChange}
                         type='text'
                         className='form-control'
                         placeholder='شماره موبایل'
@@ -122,7 +115,7 @@ const EditTeacher = ({forceRender,setforceRender}) => {
                       <input
                         name='email'
                         value={teacher.email}
-                        onChange={setTeacherInfo}
+                        onChange={onTeacherChange}
                         type='text'
                         className='form-control'
                         placeholder='آدرس ایمیل'
@@ -132,7 +125,7 @@ const EditTeacher = ({forceRender,setforceRender}) => {
                       <input
                         name='job'
                         value={teacher.job}
-                        onChange={setTeacherInfo}
+                        onChange={onTeacherChange}
                         type='text'
                         className='form-control'
                         placeholder='شغل'
@@ -142,7 +135,7 @@ const EditTeacher = ({forceRender,setforceRender}) => {
                       <select
                         name='group'
                         value={teacher.group}
-                        onChange={setTeacherInfo}
+                        onChange={onTeacherChange}
                         className='form-control'
                       >
                         <option value=''>انتخاب گروه</option>

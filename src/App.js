@@ -6,7 +6,7 @@ import AddTeacher from './components/teacher/AddTeacher'
 import EditTeacher from './components/teacher/EditTeacher'
 import ViewTeacher from './components/teacher/ViewTeacher'
 import { Route, Routes, Navigate, useNavigate } from 'react-router-dom'
-
+import { teacherContext } from './context/teacherContext'
 import {
   CURRENTLINE,
   PURPLE,
@@ -25,22 +25,13 @@ import { confirmAlert } from 'react-confirm-alert'
 //import {AddTeacher,Teachers,Teacher,EditTeacher,ViewTeacher} from './components/teacher/index';
 const App = () => {
   const [Loading, setLoading] = useState(false)
-  const [getTeachers, setTeachers] = useState([])
-  const [getFilteredTeachers,setFilteredTeachers]=useState([]);
-  const [forceRender, setforceRender] = useState(false)
-  const [getGroups, setGroups] = useState([])
-  const [getTeacher, setTeacher] = useState({
-    fullname: '',
-    photo: '',
-    mobile: '',
-    email: '',
-    job: '',
-    group: ''
-  })
-  const [query, setQuery] = useState({ text: "" })
+  const [teachers, setTeachers] = useState([])
+  const [filteredTeachers, setFilteredTeachers] = useState([])
+
+  const [groups, setGroups] = useState([])
+  const [teacher, setTeacher] = useState({})
+  const [teacherQuery, setTeacherQuery] = useState({ text: '' })
   const Navigat = useNavigate()
-  
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,41 +54,31 @@ const App = () => {
     }
     fetchData()
   }, [])
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true)
 
-        const { data: teachersData } = await getAllTeachers()
-
-        setTeachers(teachersData)
-
-        setLoading(false)
-      } catch (err) {
-        console.log(err.message)
-        setLoading(false)
-      }
-    }
-    fetchData()
-  }, [forceRender])
   const createTeacherForm = async event => {
     event.preventDefault()
     try {
-      const { status } = await createTeacher(getTeacher)
+    setLoading((prevLoading)=>!prevLoading);
+
+      const { status,data } = await createTeacher(teacher)
       if (status === 201) {
+        const allTeachers=[...teachers,data];
+        setTeachers(allTeachers);
+        setFilteredTeachers(allTeachers);
         setTeacher({})
-        setforceRender(!forceRender)
+        setLoading((prevLoading)=>!prevLoading)
         Navigat('/teachers')
       }
     } catch (err) {
       console.log(err.message)
+       setLoading((prevLoading)=>!prevLoading)
     }
   }
 
-  const setTeacherInfo = event => {
-    setTeacher({ ...getTeacher, [event.target.name]: event.target.value })
+  const onTeacherChange = event => {
+    setTeacher({ ...teacher, [event.target.name]: event.target.value })
   }
-  const confirm = (teacherId, teacherFullName) => {
+  const confirmDelete = (teacherId, teacherFullName) => {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
@@ -137,73 +118,90 @@ const App = () => {
     })
   }
   const removeTeacher = async teacherId => {
+    const allTeachers=[...teachers];
     try {
-      setLoading(true)
-      const response = await deleteTeacher(teacherId)
-      if (response) {
-        const { data: teachersData } = await getAllTeachers()
-        setTeachers(teachersData)
-        setLoading(false)
+     // setLoading(true)
+      
+      const updateTeachers=teachers.filter(c=>c.id !== teacherId);
+      setTeachers(updateTeachers);
+      setFilteredTeachers(updateTeachers);
+      const {status}=await deleteTeacher(teacherId);
+      if (status !== 200) {
+       setTeachers(allTeachers);
+      setFilteredTeachers(allTeachers);
+       // setLoading(false)
       }
     } catch (err) {
-      console.log(err.message)
-      setLoading(false)
+      console.log(err.message);
+      setTeachers(allTeachers);
+      setFilteredTeachers(allTeachers);
+     // setLoading(false)
     }
   }
-  const teacherSearch = (event) => {
-    setQuery({ ...query, text:event.target.value })
-    const allTeachers = getTeachers.filter((teacher) => {
-      return teacher.fullname
-      // .toLowerCase()
-        
-        .includes(event.target.value
-          // .toLowerCase()
-          );
+  const teacherSearch = event => {
+    setTeacherQuery({ ...teacherQuery, text: event.target.value })
+    const allTeachers = teachers.filter(teacher => {
+      return (
+        teacher.fullname
+          //.toLowerCase()
 
+          .includes(
+            event.target.value
+           // .toLowerCase()
+          )
+      )
     })
-    setFilteredTeachers(allTeachers);
+    setFilteredTeachers(allTeachers)
   }
   return (
-    <div className='App'>
-      <Navbar query={query} search={teacherSearch} />
+    <teacherContext.Provider
+      value={{
+        Loading,
+        setLoading,
+        teacher,
+        setTeacher,
+        teachers,
+        setTeachers,
+        filteredTeachers,
+        setFilteredTeachers,
+        teacherQuery,
+        groups,
+        onTeacherChange,
+        deleteTeacher: confirmDelete,
+      //  updateTeacher,
+      createTeacher:createTeacherForm,
+        teacherSearch
+      }}
+    >
+      <div className='App'>
+        <Navbar />
 
-      <Routes>
-        <Route path='/' element={<Navigate to='/teachers' />} />
-        <Route
-          path='/teachers'
-          element={
-            <Teachers
-              Teachers={getFilteredTeachers}
-              Loading={Loading}
-              confirmDelete={confirm}
-            />
-          }
-        />
+        <Routes>
+          <Route path='/' element={<Navigate to='/teachers' />} />
+          <Route
+            path='/teachers'
+            element={
+              <Teachers
+               // Teachers={filteredTeachers}
+                //Loading={Loading}
+                //confirmDelete={confirmDelete}
+              />
+            }
+          />
 
-        <Route
-          path='/teachers/add'
-          element={
-            <AddTeacher
-              Loading={Loading}
-              setTeacherInfo={setTeacherInfo}
-              teacher={getTeacher}
-              groups={getGroups}
-              createTeacherForm={createTeacherForm}
-            />
-          }
-        />
-        <Route
-          path='/teachers/edit/:teacherId'
-          element={
-            <EditTeacher
-              forceRender={forceRender}
-              setforceRender={setforceRender}
-            />
-          }
-        />
-        <Route path='/teachers/view/:teacherId' element={<ViewTeacher />} />
-      </Routes>
-    </div>
+          <Route
+            path='/teachers/add'
+            element={
+              <AddTeacher
+               
+              />
+            }
+          />
+          <Route path='/teachers/edit/:teacherId' element={<EditTeacher />} />
+          <Route path='/teachers/view/:teacherId' element={<ViewTeacher />} />
+        </Routes>
+      </div>
+    </teacherContext.Provider>
   )
 }
 

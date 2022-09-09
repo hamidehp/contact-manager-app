@@ -2,7 +2,7 @@
 import { PURPLE, COMMENT, BACKGROUND } from '../helpers/color.js'
 import SearchTeacher from './teacher/SearchTeacher';
 import { useLocation } from 'react-router-dom';
-const Navbar = ({query,search}) => {
+const Navbar = () => {
   const Location=useLocation();
   return (
     <nav className='navbar navbar-dark 
@@ -17,7 +17,7 @@ const Navbar = ({query,search}) => {
           </div>
           {Location.pathname==="/teachers" ?
          ( <div className='col'>
-            <SearchTeacher query={query} search={search} />
+            <SearchTeacher  />
           </div>):null}
         </div>
       </div>

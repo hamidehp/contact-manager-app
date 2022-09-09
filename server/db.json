@@ -1,53 +1,13 @@
 {
   "teachers": [
     {
-      "fullname": [
-        "غلامرضا کمالی"
-      ],
-      "photo": [
-        "https://media.irasin.ir/d/2022/05/13/2/34265.jpg"
-      ],
-      "mobile": "09132221212",
-      "email": [
-        "gh_kamali@msc.ir"
-      ],
-      "job": [
-        "رییس اجرای آمورش "
-      ],
-      "group": [
-        "1"
-      ],
-      "id": 1,
-      "undefined": [
-        "رییس برنامه ریزی و بهبود عملکر"
-      ]
-    },
-    {
-      "fullname": "مهدی مهرابی",
+      "fullname": "مهدی مهرابی 2",
       "photo": "http://mahdi-mehrabi.ir/wp-content/uploads/2022/07/IMG_20210822_175823_782n-2.jpg",
       "mobile": "09131234512",
-      "email": "mehdi-mehrabi@msc.ir",
+      "email": "m-mehrabi@msc.ir",
       "job": "کارشناس برنامه ریزی و بهبود عملکرد",
       "group": "1",
       "id": 2
-    },
-    {
-      "fullname": "محمد پارسایی",
-      "photo": "",
-      "mobile": "09130014112",
-      "email": "mohamad-parsaei@msc.ir",
-      "job": "تکنسین اجرای آموزش",
-      "group": "5",
-      "id": 3
-    },
-    {
-      "fullname": "حمیده پورهمایون",
-      "photo": "",
-      "mobile": "09133053622",
-      "email": "hamideh_p@yahoo.com",
-      "job": "برنامه نویس",
-      "group": "5",
-      "id": 4
     },
     {
       "fullname": "ابراهیم کاظمی",
@@ -57,6 +17,23 @@
       "job": "مدیر آموزش",
       "group": "1",
       "id": 5
+    },
+    {
+      "fullname": "احسان نوبخت",
+      "photo": "https://tr.metacomplex.com/wp-content/uploads/2021/06/wetaet.jpg",
+      "mobile": "09132333333",
+      "email": "e.nobakht@msc.ir",
+      "group": "1",
+      "job": "برنامه نویس",
+      "id": 7
+    },
+    {
+      "fullname": "حمیده پورهمایون",
+      "mobile": "09133053622",
+      "email": "hami_p@yahoo.com",
+      "job": "برنامه نویس",
+      "group": "1",
+      "id": 8
     }
   ],
   "groups": [

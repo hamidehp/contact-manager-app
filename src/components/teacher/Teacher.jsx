@@ -6,17 +6,18 @@ import {
     CYAN
   } from '../../helpers/color';
   import { Link } from 'react-router-dom';
-const Teacher =({Teacher,confirmDelete})=>{
+const Teacher =({Teacher,deleteTeacher})=>{
     return(
+      <div className='col-md-6'>
         <div style={{ backgroundColor: CURRENTLINE }} className='cardmy-2'>
         <div className='card-body'>
           <div className='row align-items-center d-flex justify-content-around'>
-            <div className='col-md-4  col-sm-4'>
+            <div className='col-md-2  col-sm-2'>
               <img
                 //src={require("../../assets/placeholder_avatar.jpg")}
                  src={(Teacher.photo) ? Teacher.photo : require("../../assets/placeholder_avatar.jpg")}
-                alt={Teacher.fullname}
-                style={{ border: `1px solid ${PURPLE}` }}
+                 alt={Teacher.fullname}
+                style={{ border: `1px solid ${PURPLE}`}}
                 className='img-fluid rounded'
               />
             </div>
@@ -50,7 +51,7 @@ const Teacher =({Teacher,confirmDelete})=>{
               >
                 <i className='fa fa-pencil' />
               </Link>
-              <button onClick={confirmDelete}
+              <button onClick={deleteTeacher}
                 className='btn my-1'
                 style={{ backgroundColor: RED }}
               >
@@ -59,6 +60,7 @@ const Teacher =({Teacher,confirmDelete})=>{
             </div>
           </div>
         </div>
+      </div>
       </div>
     );
 }
