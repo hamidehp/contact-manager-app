@@ -21,16 +21,18 @@ import {
   createTeacher,
   deleteTeacher
 } from './services/TeacherService'
-import { confirmAlert } from 'react-confirm-alert'
+import { confirmAlert } from 'react-confirm-alert';
+import _ from 'lodash';
+import { teacherSchema } from './validations/TeacherValidations' ;
 //import {AddTeacher,Teachers,Teacher,EditTeacher,ViewTeacher} from './components/teacher/index';
 const App = () => {
   const [Loading, setLoading] = useState(false)
   const [teachers, setTeachers] = useState([])
   const [filteredTeachers, setFilteredTeachers] = useState([])
-
+  const [errors,setErrors]=useState([])
   const [groups, setGroups] = useState([])
   const [teacher, setTeacher] = useState({})
-  const [teacherQuery, setTeacherQuery] = useState({ text: '' })
+  //const [teacherQuery, setTeacherQuery] = useState({ text: '' })
   const Navigat = useNavigate()
 
   useEffect(() => {
@@ -59,19 +61,23 @@ const App = () => {
     event.preventDefault()
     try {
     setLoading((prevLoading)=>!prevLoading);
-
+    await teacherSchema.validate(teacher,{abortEarly:false});
       const { status,data } = await createTeacher(teacher)
       if (status === 201) {
         const allTeachers=[...teachers,data];
         setTeachers(allTeachers);
         setFilteredTeachers(allTeachers);
-        setTeacher({})
-        setLoading((prevLoading)=>!prevLoading)
+        setTeacher({});
+        setErrors([]);
+        setLoading((prevLoading)=>!prevLoading);
+        
         Navigat('/teachers')
       }
     } catch (err) {
-      console.log(err.message)
-       setLoading((prevLoading)=>!prevLoading)
+      console.log(err.inner);
+      setErrors(err.inner)
+      setLoading((prevLoading)=>!prevLoading)
+       
     }
   }
 
@@ -138,21 +144,26 @@ const App = () => {
      // setLoading(false)
     }
   }
-  const teacherSearch = event => {
-    setTeacherQuery({ ...teacherQuery, text: event.target.value })
-    const allTeachers = teachers.filter(teacher => {
+  let filterTimeout;
+  const teacherSearch =_.debounce( (query) => {
+ //   setTeacherQuery({ ...teacherQuery, text: event.target.value });
+    console.log(query);
+    if (!query) return setFilteredTeachers( [...teachers]);
+   // clearTimeout(filterTimeout);
+   // filterTimeout=setTimeout(()=>{
+    setFilteredTeachers( teachers.filter(teacher => {
       return (
-        teacher.fullname
-          //.toLowerCase()
+        teacher.fullname.toLowerCase()
 
           .includes(
-            event.target.value
-           // .toLowerCase()
+            query.toLowerCase()
           )
       )
     })
-    setFilteredTeachers(allTeachers)
-  }
+   )
+  //},1000)
+  },1000)
+  
   return (
     <teacherContext.Provider
       value={{
@@ -164,7 +175,8 @@ const App = () => {
         setTeachers,
         filteredTeachers,
         setFilteredTeachers,
-        teacherQuery,
+        errors,
+       // teacherQuery,
         groups,
         onTeacherChange,
         deleteTeacher: confirmDelete,

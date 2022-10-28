@@ -2,7 +2,7 @@ import {PURPLE,COMMENT} from '../../helpers/color';
 import { useContext } from 'react';
 import { teacherContext } from '../../context/teacherContext';
 const SearchTeacher = () => {
-  const {teacherQuery,teacherSearch}=useContext(teacherContext);
+  const {teacherSearch}=useContext(teacherContext);
   return (
     <div className='input-group mx-2 w=75 ' dir='rtl'>
       <span
@@ -19,8 +19,8 @@ const SearchTeacher = () => {
         placeholder='جستجوی مدرس'
         aria-label='search'
         aria-describedby='basic-addon1'
-        value={teacherQuery.text}
-        onChange={teacherSearch}
+        //value={teacherQuery.text}
+        onChange={(event)=>teacherSearch(event.target.value)}
       />
     </div>
   )

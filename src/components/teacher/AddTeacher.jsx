@@ -11,7 +11,8 @@ const AddTeacher = () => {
     onTeacherChange,
     groups,
     createTeacher,
-    teacher
+    teacher,
+    errors
   } = useContext(teacherContext)
   return (
     <>
@@ -45,6 +46,9 @@ const AddTeacher = () => {
               <hr style={{ backgroundcolor: GREEN }} />
               <div className='row mt-5'>
                 <div className='col-md-4'>
+                   {errors?.map ((error,index)=>(
+                    <p key={index} className="text-danger">{error.message}</p>
+                  ))} 
                   <form onSubmit={createTeacher}>
                     <div className='mb-2'>
                       <input
@@ -54,7 +58,7 @@ const AddTeacher = () => {
                         type='text'
                         className='form-control'
                         placeholder='نام و نام خانوادگی'
-                        required={true}
+                       // required={true}
                       />
                     </div>
                     <div className='mb-2'>
@@ -75,7 +79,7 @@ const AddTeacher = () => {
                         type='text'
                         className='form-control'
                         placeholder='شماره موبایل'
-                        required={true}
+                     //   required={true}
                       />
                     </div>
                     <div className='mb-2'>
