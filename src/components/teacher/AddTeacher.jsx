@@ -2,9 +2,14 @@ import { toBeRequired } from '@testing-library/jest-dom/dist/matchers'
 import { Link } from 'react-router-dom'
 import Spinner from '../Spinner'
 import { COMMENT, GREEN, PURPLE } from '../../helpers/color'
-import { getTeacher } from '../../services/TeacherService'
+import { createTeacher, getTeacher } from '../../services/TeacherService'
 import { useContext } from 'react'
 import { teacherContext } from '../../context/teacherContext'
+import { Formik, FormikConsumer, useFormik } from 'formik';
+import { teacherSchema } from '../../validations/TeacherValidations'
+import { values } from 'lodash'
+
+
 const AddTeacher = () => {
   const {
     Loading,
@@ -12,8 +17,26 @@ const AddTeacher = () => {
     groups,
     createTeacher,
     teacher,
-    errors
-  } = useContext(teacherContext)
+    //errors
+  } = useContext(teacherContext);
+  const formik=useFormik({
+    initialValues:{
+      fullname:'',
+      photo :'',
+      mobile:'',
+      email:'',
+      job:'',
+      group:''  },
+      validationSchema:teacherSchema,
+      onSubmit:values =>{
+        console.log(values);
+        createTeacher(values);
+      }
+      
+  
+  
+  
+  })
   return (
     <>
       {Loading ? (
@@ -46,67 +69,84 @@ const AddTeacher = () => {
               <hr style={{ backgroundcolor: GREEN }} />
               <div className='row mt-5'>
                 <div className='col-md-4'>
-                   {errors?.map ((error,index)=>(
+                   {/* {errors?.map ((error,index)=>(
                     <p key={index} className="text-danger">{error.message}</p>
-                  ))} 
-                  <form onSubmit={createTeacher}>
+                  ))}  */}
+                  <form onSubmit={formik.handleSubmit}>
                     <div className='mb-2'>
                       <input
+                      id='fullname'
                         name='fullname'
-                        value={teacher.fullname}
-                        onChange={onTeacherChange}
+                        value={formik.values.fullname}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         type='text'
                         className='form-control'
                         placeholder='نام و نام خانوادگی'
                        // required={true}
                       />
+                      {formik.touched.fullname && formik.errors.fullname?(<div className='text-danger'>{formik.errors.fullname}</div>):null}
                     </div>
                     <div className='mb-2'>
                       <input
+                        id='photo'
                         name='photo'
-                        value={teacher.photo}
-                        onChange={onTeacherChange}
+                        value={formik.values.photo}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         type='text'
                         className='form-control'
                         placeholder='آدرس تصویر'
                       />
+                       {formik.touched.photo && formik.errors.photo?(<div className='text-danger'>{formik.errors.photo}</div>):null}
                     </div>
                     <div className='mb-2'>
                       <input
+                        id='mobile'
                         name='mobile'
-                        value={teacher.mobile}
-                        onChange={onTeacherChange}
+                        value={formik.values.mobile}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         type='text'
                         className='form-control'
                         placeholder='شماره موبایل'
                      //   required={true}
                       />
+                       {formik.touched.mobile && formik.errors.mobile?(<div className='text-danger'>{formik.errors.mobile}</div>):null}
                     </div>
                     <div className='mb-2'>
                       <input
+                        id='email'
                         name='email'
-                        value={teacher.email}
-                        onChange={onTeacherChange}
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         type='text'
                         className='form-control'
                         placeholder='آدرس ایمیل'
                       />
+                        {formik.touched.email && formik.errors.email?(<div className='text-danger'>{formik.errors.email}</div>):null}
                     </div>
                     <div className='mb-2'>
                       <input
+                        id='job'
                         name='job'
-                        value={teacher.job}
-                        onChange={onTeacherChange}
+                        value={formik.values.job}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         type='text'
                         className='form-control'
                         placeholder='شغل'
                       />
+                         {formik.touched.job && formik.errors.job?(<div className='text-danger'>{formik.errors.job}</div>):null}
                     </div>
                     <div className='mb-2'>
                       <select
+                        id='group'
                         name='group'
-                        value={teacher.group}
-                        onChange={onTeacherChange}
+                        value={formik.values.group}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         className='form-control'
                       >
                         <option value=''>انتخاب گروه</option>
@@ -118,6 +158,7 @@ const AddTeacher = () => {
                             </option>
                           ))}
                       </select>
+                      {formik.touched.group && formik.errors.group?(<div className='text-danger'>{formik.errors.group}</div>):null}
                     </div>
                     <div className='mx-2'>
                       <input

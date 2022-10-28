@@ -7,6 +7,7 @@ import EditTeacher from './components/teacher/EditTeacher'
 import ViewTeacher from './components/teacher/ViewTeacher'
 import { Route, Routes, Navigate, useNavigate } from 'react-router-dom'
 import { teacherContext } from './context/teacherContext'
+
 import {
   CURRENTLINE,
   PURPLE,
@@ -23,13 +24,13 @@ import {
 } from './services/TeacherService'
 import { confirmAlert } from 'react-confirm-alert';
 import _ from 'lodash';
-import { teacherSchema } from './validations/TeacherValidations' ;
+//import { teacherSchema } from './validations/TeacherValidations' ;
 //import {AddTeacher,Teachers,Teacher,EditTeacher,ViewTeacher} from './components/teacher/index';
 const App = () => {
   const [Loading, setLoading] = useState(false)
   const [teachers, setTeachers] = useState([])
   const [filteredTeachers, setFilteredTeachers] = useState([])
-  const [errors,setErrors]=useState([])
+  //const [errors,setErrors]=useState([])
   const [groups, setGroups] = useState([])
   const [teacher, setTeacher] = useState({})
   //const [teacherQuery, setTeacherQuery] = useState({ text: '' })
@@ -57,25 +58,25 @@ const App = () => {
     fetchData()
   }, [])
 
-  const createTeacherForm = async event => {
-    event.preventDefault()
+  const createTeacherForm = async (values) => {
+    //event.preventDefault()
     try {
     setLoading((prevLoading)=>!prevLoading);
-    await teacherSchema.validate(teacher,{abortEarly:false});
-      const { status,data } = await createTeacher(teacher)
+    //await teacherSchema.validate(teacher,{abortEarly:false});
+      const { status,data } = await createTeacher(values)
       if (status === 201) {
         const allTeachers=[...teachers,data];
         setTeachers(allTeachers);
         setFilteredTeachers(allTeachers);
-        setTeacher({});
-        setErrors([]);
+       // setTeacher({});
+       // setErrors([]);
         setLoading((prevLoading)=>!prevLoading);
         
         Navigat('/teachers')
       }
     } catch (err) {
       console.log(err.inner);
-      setErrors(err.inner)
+     // setErrors(err.inner)
       setLoading((prevLoading)=>!prevLoading)
        
     }
@@ -175,7 +176,7 @@ const App = () => {
         setTeachers,
         filteredTeachers,
         setFilteredTeachers,
-        errors,
+       // errors,
        // teacherQuery,
         groups,
         onTeacherChange,

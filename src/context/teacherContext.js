@@ -10,7 +10,7 @@ export const teacherContext=createContext({
     setFilteredTeachers:()=>{},
     teacherQuery:{},
     groups:[],
-    errors:[],
+    //errors:[],
     onTeacherChange:()=>{},
     deleteTeacher:()=>{},
     updateTeacher:()=>{},
